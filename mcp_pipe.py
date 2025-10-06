@@ -13,7 +13,7 @@ Run all configured servers (default)
 Run a single local server script (back-compat)
     python mcp_pipe.py path/to/server.py
 
-Config discovery order:
+Config (can be loaded from server or file loading with local path) discovery order:
     $MCP_CONFIG, then ./mcp_config.json
 
 Env overrides:
