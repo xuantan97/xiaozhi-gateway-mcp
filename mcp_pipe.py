@@ -28,6 +28,7 @@ import os
 import signal
 import sys
 import json
+import requests
 from dotenv import load_dotenv
 
 # Auto-load environment variables from a .env file if present
