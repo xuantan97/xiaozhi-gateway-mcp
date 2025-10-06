@@ -170,23 +170,26 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 def load_config():
-    """Load JSON config from $MCP_CONFIG or ./mcp_config.json. Return dict or {}."""
+    """Load JSON config from $MCP_CONFIG (URL or local path)."""
     path = os.environ.get("MCP_CONFIG") or os.path.join(os.getcwd(), "mcp_config.json")
+
     if path.startswith("http://") or path.startswith("https://"):
-      try:
-        res = requests.get(path, timeout=5)
-        res.raise_for_status()
-        return res.json()
-    except Exception as e:
-        print(f"Failed to load remote config {path}: {e}")
-        return {}
+        try:
+            res = requests.get(path, timeout=5)
+            res.raise_for_status()
+            return res.json()
+        except Exception as e:
+            print(f"Failed to load remote config {path}: {e}")
+            return {}
+
     if not os.path.exists(path):
         return {}
+
     try:
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
-        logger.warning(f"Failed to load config {path}: {e}")
+        print(f"Failed to load local config {path}: {e}")
         return {}
 
 
